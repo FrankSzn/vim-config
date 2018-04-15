@@ -1,8 +1,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
-
+" Add to solve the proble of PluginInstall not command
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/home/frankszn/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
 "call vundle#begin('~/some/path/here')
@@ -106,14 +106,10 @@ map <F12> :MBEbn<CR>
 "YouCompleteMe
 Bundle 'Valloric/YouCompleteMe'
 
-"vim-go
-call plug#begin()
-Plugin 'faith/vim-go', {'do': ':GoInstallBinaries'}
-call plug#end()
 
 "ultisnips
 Plugin 'SirVer/ultisnips'
-" All of your Plugins must be added before the following line
+"" All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
@@ -123,7 +119,11 @@ filetype plugin indent on    " required
 "
 " solarized
 syntax enable
-set background=dark
+if has('gui_running')
+    set background=dark
+else
+    set background=light
+endif
 colorscheme solarized
 
 " YCM settings
@@ -243,10 +243,12 @@ set encoding=utf-8
 set number
 
 "" Use mouse (only for resizing!)
-set mouse=a
+if has('mouse')
+    set mouse=a
+endif
  
 " Set the focus to the correct screen (ok, no more mouse thingies)
-set mousefocus
+" set mousefocus
 
 set tabstop=4     " a tab is four spaces
 set backspace=indent,eol,start
@@ -260,6 +262,19 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 set cpoptions+=$
+
+"Toggle Menu and Toolbar
+set guioptions-=m
+set guioptions-=T
+map <silent> <F4> :if &guioptions =~# 'T' <Bar>
+        \set guioptions-=T <Bar>
+        \set guioptions-=m <bar>
+    \else <Bar>
+        \set guioptions+=T <Bar>
+        \set guioptions+=m <Bar>
+    \endif<CR>
+
+
 
 
 
